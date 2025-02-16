@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medical Appointment Scheduler</title>
+  <style>
+    /* Set the background image */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      color: #333;
+      position: relative;
+    }
+
+    /* Create a container for the background image with less intensity */
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://images.pexels.com/photos/4386467/pexels-photo-4386467.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.3; /* Reduce the intensity of the background image */
+      z-index: -1; /* Place it behind the content */
+    }
+
+    /* Main container with semi-transparent background */
+    .container {
+      max-width: 600px;
+      margin: 100px auto;
+      padding: 30px;
+      background-color: rgba(255, 255, 255, 0.9); /* White with slight transparency */
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      position: relative; /* Ensure content is above the background */
+    }
+
+    h1 {
+      text-align: center;
+      color: #4CAF50;
+    }
+
+    label {
+      font-size: 1.1em;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"], input[type="email"], input[type="tel"], input[type="date"], select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 15px;
+      width: 100%;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .contact {
+      margin-top: 2rem;
+    }
+
+  </style>
+</head>
+<body>
+
+    <!-- Background image container -->
+    <div class="background"></div>
+
+    <!-- Content sections -->
+    <section>
+        <h1>Welcome to Govt Hospital!</h1>
+        <p>Providing world-class healthcare services.</p>
+    </section>
+
+    <!-- About section -->
+    <section id="about">
+        <h2>About Govt Hospital</h2>
+        <p>Govt Hospital is one of the largest and most renowned healthcare institutions in India, offering a comprehensive range of medical services. Founded many years ago, Govt Hospital has been at the forefront of medical innovation and patient care.</p>
+        <button onclick="showAboutDetails()">Show More Details</button>
+
+        <div id="aboutDetails">
+            <h3>Our History</h3>
+            <p>Govt Hospitals have a long history of providing healthcare to the public. With numerous hospitals across India, Govt Hospital is known for its cutting-edge medical treatments and patient-centric care.</p>
+            
+            <h3>Services We Offer</h3>
+            <ul>
+                <li>Cardiology</li>
+                <li>Orthopedics</li>
+                <li>Neurology</li>
+                <li>Cancer Treatment</li>
+                <li>Emergency Care</li>
+                <li>General Medicine</li>
+                <li>Pediatrics</li>
+                <li>And much more...</li>
+            </ul>
+            
+            <h3>Our Commitment to Excellence</h3>
+            <p>Govt Hospitals are committed to providing the highest quality of healthcare, with a focus on both advanced technology and compassionate care. We are constantly striving to enhance our services through research, education, and by fostering partnerships with top medical experts worldwide.</p>
+        </div>
+    </section>
+
+    <script>
+        // Function to show the details in the About section
+        function showAboutDetails() {
+            const aboutDetails = document.getElementById('aboutDetails');
+            if (aboutDetails.style.display === "none") {
+                aboutDetails.style.display = "block"; // Show the details
+            } else {
+                aboutDetails.style.display = "none"; // Hide the details
+            }
+        }
+    </script>
+
+  <div class="container">
+    <h1>Book Your Appointment</h1>
+    <form id="appointmentForm">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="contact">Contact Number</label>
+      <input type="tel" id="contact" name="contact" required>
+
+      <label for="date">Preferred Appointment Date</label>
+      <input type="date" id="date" name="date" required>
+
+      <label for="doctor">Select Doctor</label>
+      <select id="doctor" name="doctor">
+        <option value="dr_smith">Dr. Revanth</option>
+        <option value="dr_jones">Dr. Sai</option>
+        <option value="dr_williams">Dr.</option>
+      </select>
+ 	<label for="address">Your Address/Location</label>
+      <input type="text" id="address" name="address" required>
+
+      <button type="submit">Submit Appointment</button>
+    </form>
+  </div>
+
+  <div class="contact">
+      <h2>Contact Us</h2>
+      <p>If you have any questions or need assistance, please feel free to reach out to us:</p>
+      <ul>
+          <li><strong>Phone:</strong> +91 9949072200</li>
+          <li><strong>Email:</strong> contact@govthospital.com</li>
+          <li><strong>Address:</strong> 123 Health Street, Medical City,Vijawada!</li>
+      </ul>
+  </div>
+
+  <script>
+    document.getElementById("appointmentForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      alert("Appointment submitted successfully!");
+    });
+
+  </script>
+
+</body>
+</html>

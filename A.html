@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Input Example</title>
+    <style>
+        /* Optional styling for better appearance */
+        .container {
+            margin: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 200px;
+        }
+        button {
+            padding: 10px;
+            margin-left: 10px;
+        }
+ .container {
+            margin: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 200px;
+        }
+        button {
+            padding: 10px;
+            margin-left: 10px;
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <label for="inputBox">Enter something:</label>
+    <input type="text" id="inputBox" placeholder="Type here...">
+    <button onclick="clearInput()">Clear</button>
+</div>
+
+<script>
+    function clearInput() {
+        document.getElementById('inputBox').value = '';
+    }
+</script>
+
+</body>
+</html>

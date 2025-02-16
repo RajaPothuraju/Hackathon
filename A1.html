@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mental Health Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://media.istockphoto.com/id/1306217369/photo/adult-and-child-hands-holding-encephalography-brain-paper-cutout-autism-stroke-epilepsy-and.jpg?s=2048x2048&w=is&k=20&c=JZ_rWsMP2ci8ZnYvNASaJd8j8F_rUEz_1t8Q-D56244=');
+            background-size: cover;
+            background-position: center;
+            color: #333;
+        }
+        header {
+            background-color: #4caf50;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+.header-container {
+    display: flex;
+    align-items: center; /* Align logo and text */
+    gap: 15px; /* Add space between logo and text */
+}
+
+.logo {
+    width: 80px; /* Adjust size */
+    height: auto; /* Maintain aspect ratio */
+}
+
+
+        .chat-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .chat-header {
+            background-color: #4caf50;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        .chat-box {
+            height: 400px;
+            overflow-y: auto;
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+        .chat-box .message {
+            margin-bottom: 1rem;
+        }
+        .chat-box .message.user {
+            text-align: right;
+        }
+        .chat-box .message.bot {
+            text-align: left;
+        }
+        .chat-input {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid #ddd;
+            background-color: #f1f1f1;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .chat-input button {
+            margin-left: 1rem;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .chat-input button:hover {
+            background-color: #45a049;
+        }.rating-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+.previous-button {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.previous-button:hover {
+    background-color: #0056b3;
+}
+
+        .receipt {
+            display: none;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #f1f1f1;
+            margin-top: 2rem;
+        }
+        .receipt {
+            display: block;
+            font-family: 'Monospace', cursive;
+            background: url('https://img.freepik.com/free-vector/organic-watercolor-background_91008-355.jpg?t=st=1738428081~exp=1738431681~hmac=22fd7fec93de2fae3c6c342c3e7401d8cb0d312e126abf78c21ceabf4dd7591f&w=996');
+            padding: 2rem;
+            border: 2px solid #333;
+            margin: 2rem auto;
+            max-width: 800px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .receipt h2 {
+            text-align: center;
+            color: #4caf50;
+            text-shadow: 1px 1px #ddd;
+        }
+        .receipt p {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            margin: 0.5rem 0;
+        }
+        .receipt .chat-log .message {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+.next-button {
+            position: absolute;
+            top: 50%;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transform: translateY(-50%);
+        }
+        .next-button:hover {
+            background-color: #45a049;
+        }    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+        <h1>AI Mental Health Chatbot</h1>
+        <p>Your companion to mental well-being</p>
+            <img src="https://media.istockphoto.com/id/1310732591/vector/illustration-for-world-mental-health-day-with-green-ribbon-and-map.jpg?s=2048x2048&w=is&k=20&c=07JmF2sFTuO3Sb0Fr52iEx7sD8u_Q7cRwdnMtgN8L1o=" alt="Logo" class="logo">
+  </header>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>Chat with Us</h2>
+        </div>
+        <div class="chat-box" id="chat-box">
+            <div class="message bot">Hello! I’m here to help. How are you feeling today?</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Type your message here...">
+            <button onclick="sendMessage()">Send</button>
+            <input type="button" value="Clear" onclick="clearChat()">
+            <button onclick="generateReceipt()">Get Receipt</button>
+        </div>
+    </div>
+
+    <div class="receipt">
+        <h2>Chat Receipt</h2>
+        <p><strong>Date:</strong> <span id="date"></span></p>
+        <p><strong>Transaction ID:</strong> <span id="transaction-id"></span></p>
+        
+        <div class="chat-log" id="chat-log"></div>
+
+        <div class="footer">
+            <p>Thank you for using our chat service.</p>
+        </div>
+	 </div>
+<div class="rating-container">
+    <h3>Your Mental Health Rating</h3>
+    <p id="rating-text">Rating: <span id="rating-value">0</span>/10</p>
+    <p id="doctor-suggestion"></p>
+</div>
+	
+        <div class="mood-log"></div>
+       <button class="previous-button" onclick="location.href='file:///C:/Users/HP/Desktop/hari.py/A.html'">Previous</button>            </div> 
+<button class="next-button" onclick="window.location.href='file:///C:/Users/HP/Desktop/hari.py/123.html'">Next</button>
+
+   <script>
+    const messages = [];
+
+    function sendMessage() {
+        const userInput = document.getElementById('user-input').value.trim();
+        const chatBox = document.getElementById('chat-box');
+
+        if (userInput !== "") {
+            // Display user message
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user';
+            userMessage.textContent = userInput;
+            chatBox.appendChild(userMessage);
+
+            messages.push({ type: 'user', text: userInput });
+
+            // Generate and display bot response
+            const botResponse = generateAIResponse(userInput);
+            const botMessage = document.createElement('div');
+            botMessage.className = 'message bot';
+            botMessage.textContent = botResponse;
+            chatBox.appendChild(botMessage);
+
+            messages.push({ type: 'bot', text: botResponse });
+
+            // Clear input field
+            document.getElementById('user-input').value = "";
+
+            // Scroll to the bottom
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    }
+
+   function generateAIResponse(input) {
+    // Simple keyword-based responses for mental health topics
+    if (input.toLowerCase().includes("sad")) {
+        return "I'm really sorry you're feeling this way. It's okay to feel sad. Would you like to talk about it? Try doing something you enjoy, like reading a book, going for a walk, or listening to your favorite music.";
+    } else if (input.toLowerCase().includes("stressed")) {
+        return "It sounds like you're feeling a bit stressed. Take a deep breath. Want some tips on relaxation? You can try practicing mindfulness, taking short breaks, or engaging in physical activity.";
+    } else if (input.toLowerCase().includes("happy")) {
+        return "That's wonderful! I'm so glad you're feeling happy! Keep doing what makes you happy and spread the positivity.";
+    } else if (input.toLowerCase().includes("panic attack")) {
+        return "During a panic attack, focus on deep breathing, try to ground yourself by noticing your surroundings, and remind yourself that the feelings, though intense, will pass. Seeking support from a friend or family member can also help.";
+    } else if (input.toLowerCase().includes("anxiety")) {
+        return "Anxiety can be tough, but you're not alone. Do you want to chat or hear some calming techniques? Deep breathing exercises, journaling, and talking to a supportive person can help.";
+    } else if (input.toLowerCase().includes("low")) {
+        return "I'm sorry you're feeling low; I'm here if you want to talk. Taking small steps to practice self-care, like getting enough sleep and eating well, can make a difference.";
+    } else if (input.toLowerCase().includes("breakup")) {
+        return "Give yourself time to heal, focus on self-care, lean on supportive people, and slowly rediscover your own strength and joy. Engaging in activities that bring you happiness can also help.";
+    } else if (input.toLowerCase().includes("angry")) {
+        return "It's okay to feel angry sometimes. Want to talk about what's causing this feeling? Try expressing your feelings through writing, physical activity, or talking to someone you trust.";
+    } else if (input.toLowerCase().includes("excited")) {
+        return "That sounds exciting! I'm glad you're feeling energized and enthusiastic! Channel your excitement into productive activities or share your excitement with others.";
+    } else if (input.toLowerCase().includes("bored")) {
+        return "Feeling bored can be frustrating. Want some ideas to pass the time? Try picking up a new hobby, reading a book, or exploring new interests online.";
+    } else if (input.toLowerCase().includes("lonely")) {
+        return "Loneliness can be tough. I'm here to keep you company. Want to chat about it? Reaching out to friends, joining clubs or groups, or volunteering can help you feel more connected.";
+    } else if (input.toLowerCase().includes("grateful")) {
+        return "That's wonderful! It's great to hear that you're feeling grateful. Keep a gratitude journal to remind yourself of the positives in your life.";
+    } else if (input.toLowerCase().includes("confused")) {
+        return "Feeling confused is completely natural. Do you want to talk through what's on your mind? Breaking down the issue into smaller parts or seeking advice can help.";
+    } else if (input.toLowerCase().includes("hopeful")) {
+        return "It's great to hear you're feeling hopeful! Keep that positive outlook. Setting achievable goals can help maintain that sense of hope.";
+    } else if (input.toLowerCase().includes("scared")) {
+        return "It's okay to feel scared. I'm here if you want to talk about what's worrying you. Surround yourself with supportive people and take small steps to face your fears.";
+    } else if (input.toLowerCase().includes("ashamed")) {
+        return "Feeling ashamed can be really tough. Remember, it's important to be kind to yourself. Reflecting on your actions and making amends if necessary can help you move forward.";
+    } else if (input.toLowerCase().includes("embarrassed")) {
+        return "It's normal to feel embarrassed sometimes. If you want to share what happened, I'm here to listen. Remember that everyone makes mistakes, and it's a part of learning.";
+    } else if (input.toLowerCase().includes("guilty")) {
+        return "Guilt can weigh heavily on us. Do you want to talk about what's making you feel this way? Seeking forgiveness from yourself and others can help alleviate guilt.";
+    } else if (input.toLowerCase().includes("proud")) {
+        return "That's fantastic! I'm glad you're feeling proud of yourself. Celebrate your achievements and share your success with others.";
+    } else if (input.toLowerCase().includes("nervous")) {
+        return "Nerves can be tricky. Do you want some tips to calm those jitters? Practice deep breathing, prepare thoroughly, and visualize a positive outcome.";
+    } else {
+        return "Tell me more about how you're feeling. I'm here to listen.";
+    }
+}
+
+    function clearChat() {
+        document.getElementById('chat-box').innerHTML = `
+            <div class="message bot">Hello! I’m here to help. How are you feeling today?</div>
+        `;
+        messages.length = 0;
+    }
+
+    function generateReceipt() {
+        const receipt = document.querySelector('.receipt');
+        const chatLog = document.getElementById('chat-log');
+        chatLog.innerHTML = '';
+
+        messages.forEach(message => {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${message.type}`;
+            messageDiv.textContent = `${message.type === 'user' ? 'User' : 'AI'}: ${message.text}`;
+            chatLog.appendChild(messageDiv);
+        });
+
+        document.getElementById("date").innerText = new Date().toLocaleString();
+        document.getElementById("transaction-id").innerText = Math.floor(Math.random() * 1000000000);
+
+        receipt.style.display = 'block';
+    }
+</script>
+<script>
+let totalRating = 0; // Track the user's mental health rating
+
+function generateAIResponse(input) {
+    let response = "";
+    let rating = 0;
+
+    // Assign ratings based on emotional state
+    if (input.toLowerCase().includes("sad")) {
+        response = "I'm really sorry you're feeling this way. It's okay to feel sad. Would you like to talk about it? Try doing something you enjoy, like reading a book, going for a walk, or listening to your favorite music.";
+        rating = 6;
+    } else if (input.toLowerCase().includes("stressed")) {
+        response = "It sounds like you're feeling a bit stressed. Take a deep breath. Want some tips on relaxation? You can try practicing mindfulness, taking short breaks, or engaging in physical activity.";
+        rating = 5;
+    } else if (input.toLowerCase().includes("happy")) {
+        response = "That's wonderful! I'm so glad you're feeling happy! Keep doing what makes you happy and spread the positivity.";
+        rating = 1;
+    } else if (input.toLowerCase().includes("panic attack")) {
+        response = "During a panic attack, focus on deep breathing, try to ground yourself by noticing your surroundings, and remind yourself that the feelings, though intense, will pass. Seeking support from a friend or family member can also help.";
+        rating = 9;
+    } else if (input.toLowerCase().includes("anxiety")) {
+        response = "Anxiety can be tough, but you're not alone. Do you want to chat or hear some calming techniques? Deep breathing exercises, journaling, and talking to a supportive person can help.";
+        rating = 8;
+    } else if (input.toLowerCase().includes("low")) {
+        response = "I'm sorry you're feeling low; I'm here if you want to talk. Taking small steps to practice self-care, like getting enough sleep and eating well, can make a difference.";
+        rating = 7;
+    } else if (input.toLowerCase().includes("breakup")) {
+        response = "Give yourself time to heal, focus on self-care, lean on supportive people, and slowly rediscover your own strength and joy. Engaging in activities that bring you happiness can also help.";
+        rating = 7;
+    } else if (input.toLowerCase().includes("angry")) {
+        response = "It's okay to feel angry sometimes. Want to talk about what's causing this feeling? Try expressing your feelings through writing, physical activity, or talking to someone you trust.";
+        rating = 5;
+    } else if (input.toLowerCase().includes("excited")) {
+        response = "That sounds exciting! I'm glad you're feeling energized and enthusiastic! Channel your excitement into productive activities or share your excitement with others.";
+        rating = 2;
+    } else if (input.toLowerCase().includes("bored")) {
+        response = "Feeling bored can be frustrating. Want some ideas to pass the time? Try picking up a new hobby, reading a book, or exploring new interests online.";
+        rating = 3;
+    } else if (input.toLowerCase().includes("lonely")) {
+        response = "Loneliness can be tough. I'm here to keep you company. Want to chat about it? Reaching out to friends, joining clubs or groups, or volunteering can help you feel more connected.";
+        rating = 6;
+    } else if (input.toLowerCase().includes("grateful")) {
+        response = "That's wonderful! It's great to hear that you're feeling grateful. Keep a gratitude journal to remind yourself of the positives in your life.";
+        rating = 2;
+    } else if (input.toLowerCase().includes("confused")) {
+        response = "Feeling confused is completely natural. Do you want to talk through what's on your mind? Breaking down the issue into smaller parts or seeking advice can help.";
+        rating = 4;
+    } else if (input.toLowerCase().includes("hopeful")) {
+        response = "It's great to hear you're feeling hopeful! Keep that positive outlook. Setting achievable goals can help maintain that sense of hope.";
+        rating = 3;
+    } else if (input.toLowerCase().includes("scared")) {
+        response = "It's okay to feel scared. I'm here if you want to talk about what's worrying you. Surround yourself with supportive people and take small steps to face your fears.";
+        rating = 7;
+    } else if (input.toLowerCase().includes("ashamed")) {
+        response = "Feeling ashamed can be really tough. Remember, it's important to be kind to yourself. Reflecting on your actions and making amends if necessary can help you move forward.";
+        rating = 6;
+    } else if (input.toLowerCase().includes("embarrassed")) {
+        response = "It's normal to feel embarrassed sometimes. If you want to share what happened, I'm here to listen. Remember that everyone makes mistakes, and it's a part of learning.";
+        rating = 5;
+    } else if (input.toLowerCase().includes("guilty")) {
+        response = "Guilt can weigh heavily on us. Do you want to talk about what's making you feel this way? Seeking forgiveness from yourself and others can help alleviate guilt.";
+        rating = 6;
+    } else if (input.toLowerCase().includes("proud")) {
+        response = "That's fantastic! I'm glad you're feeling proud of yourself. Celebrate your achievements and share your success with others.";
+        rating = 2;
+    } else if (input.toLowerCase().includes("nervous")) {
+        response = "Nerves can be tricky. Do you want some tips to calm those jitters? Practice deep breathing, prepare thoroughly, and visualize a positive outcome.";
+        rating = 5;
+    } else {
+        response = "Tell me more about how you're feeling. I'm here to listen.";
+        rating = 0;
+    }
+
+    // Update the total rating
+    totalRating = Math.max(totalRating, rating); // Keep the highest rating
+    updateRatingDisplay();
+
+    return response;
+}
+
+function updateRatingDisplay() {
+    const ratingValue = document.getElementById('rating-value');
+    const doctorSuggestion = document.getElementById('doctor-suggestion');
+
+    ratingValue.textContent = totalRating;
+
+    if (totalRating >= 7) {
+        doctorSuggestion.textContent = "Your mental health rating indicates that you might benefit from professional help. Please consider consulting a doctor.";
+        doctorSuggestion.style.color = "red";
+    } else {
+        doctorSuggestion.textContent = "Your mental health rating is within a normal range. Keep taking care of yourself!";
+        doctorSuggestion.style.color = "green";
+    }
+}
+</script>
+<script>
+function generateReceipt() {
+    const receipt = document.querySelector('.receipt');
+    const chatLog = document.getElementById('chat-log');
+    chatLog.innerHTML = '';
+
+    messages.forEach(message => {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${message.type}`;
+        messageDiv.textContent = `${message.type === 'user' ? 'Harini' : 'AI'}: ${message.text}`;
+        chatLog.appendChild(messageDiv);
+    });
+
+    document.getElementById("date").innerText = new Date().toLocaleString();
+    document.getElementById("transaction-id").innerText = Math.floor(Math.random() * 1000000000);
+
+    receipt.style.display = 'block';
+    chatHistory.push({
+        role: "user",
+        parts: [{ text: `Using the details provided above, please address this query: ${userData.message}` }, ...(userData.file.data ? [{ inline_data: userData.file }] : [])],
+    });
+}
+
+</script>
+ <footer>
+        <p>Click the link below to go to the next page for <strong>DOCTOR CONSULTATION SERVICES</strong>:</p>
+        <a href="file:///C:/Users/HP/Desktop/hari.py/A2.html">Go to <strong>Doctor Consultation Page</strong></a>
+    </footer>
+
+</body>
+</html>
